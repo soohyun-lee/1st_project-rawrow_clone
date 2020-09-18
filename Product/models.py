@@ -37,7 +37,7 @@ class Products(models.Model):
 	notice          = models.TextField()
 	sale_price	= models.IntegerField(null=True)
 	sub_category    = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
-	hover_image     = models.BooleanField(default = False, null = True)
+	hover_image     = models.CharField(max_length=100, null = True)
 	product_group	= models.ForeignKey(ProductGroup, on_delete = models.CASCADE)
 	sub_text	= models.CharField(max_length=45, null=True)
 
