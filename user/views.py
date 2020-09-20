@@ -60,7 +60,7 @@ class SignUpView(View):
 class LoginView(View):
     def post(self, request):
         data = json.loads(request.body)
-        password = data.get('password', None)
+        password = data.get('password')
         #아이디 혹은 비밀번호를 빈칸으로 두고 로그인 하려고 했을 때,
         if (data['userid'] == "" or
             data['password'] == ""):
@@ -71,10 +71,10 @@ class LoginView(View):
             if bcrypt.checkpw(password.encode('utf-8'), login_user.password.encode('utf-8')):
                 token = jwt.encode(
                     {
-                        'user_id' : login_user.id,
+                        'userid' : login_user.id,
                     }, SECRET_KEY, algorithm = ALGORITHM).decode('utf-8')
 
-                return JsonResponse({'Authorization(SUCCESS)': token}, status=200)
+                return JsonResponse({'Authorization': token}, status=200)
             
             return JsonResponse({'message':'INVALID_USER'}, status=400)
 

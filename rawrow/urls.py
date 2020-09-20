@@ -1,5 +1,8 @@
-from django.conf.urls import url
+from django.urls import path, include
 
 urlpatterns = [
+
+    path('user', include('user.urls')),
+    path('product', include('product.urls')),
 
 ]
