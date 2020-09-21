@@ -2,16 +2,48 @@ import os
 import django
 import csv
 import sys
-# from starbucks import starbucks_defaults
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "rawrow.settings")
 django.setup()
 from Product.models import *
 
-CSV_PATH_PRODUCTS = 'csv_files/done/clear_all_product.csv'
+CSV_PATH_PRODUCTS = './accessory_all_product.csv'
 
 with open(CSV_PATH_PRODUCTS) as in_file:
     data_reader = csv.reader(in_file)
     next(data_reader, None)
+
+    #RELATED PRODUCT DUMP하는 코드
+    # for row in data_reader:
+    #     if row[0]:
+    #         product_name = row[0]
+
+    #     if row[1]:
+    #         related_name = row[1]
+    #     try:
+    #         product_item = Products.objects.get(name=product_name)
+    #         related_item = Products.objects.get(name=related_name)
+    #     except:
+    #         continue
+
+    #     ProductRelated.objects.create(product=product_item, related_product=related_item)
+
+    #DETAIL IMAGE URL DUMP하는 코드
+    for row in data_reader:
+        try:
+            product_name = Products.objects.get(name=row[6])
+            detail_image_list = (row[5]).replace('[',' ').replace(']',' ').split(',')
+
+        except:
+            continue
+
+        for detail_image in detail_image_list:
+            DetailImage.objects.create(name=product_name, detailImage=detail_image)
+
+    # for detail_image in detail_image_list:
+    #         DetailImage.objects.create(name=product_name, detailImage=detail_image)
+
+
+
 
     # PRODUCT_GROUP DUMP하는 코드
     # for row in data_reader:
@@ -25,7 +57,7 @@ with open(CSV_PATH_PRODUCTS) as in_file:
     #         product_group = row[2]
     #         categories = Category.objects.get(name = category)
     #         subCategories = SubCategory.objects.get(name = subCategory, category=categories)
-    #         ProductGroup.objects.create(name = product_group, sub_category = subCategories)
+    #         ProductGroup.objects.create(name = product_group, subcategory = subCategories)
 
     # PRODUCT DUMP 하는 코드
     # for row in data_reader:
@@ -50,5 +82,5 @@ with open(CSV_PATH_PRODUCTS) as in_file:
     #         p_product_group = row[2]
     #         categories = Category.objects.get(name=p_category)
     #         subcategories = SubCategory.objects.get(name=p_subCategory, category=categories)
-    #         product_groups= ProductGroup.objects.get(name =p_product_group, sub_category=subcategories)
+    #         product_groups= ProductGroup.objects.get(name =p_product_group, subcategory=subcategories)
     #     Products.objects.create(name=p_name, price=p_price, point=p_point, thumbnail=p_thumbnail, description=p_description, info=p_info,notice=p_notice,sale_price=p_sale_price, sub_category = subcategories, product_group = product_groups, sub_text=p_sub_text)
