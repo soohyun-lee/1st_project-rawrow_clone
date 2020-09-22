@@ -6,7 +6,6 @@
 *.log
 *.pot
 *.pyc
-*.swp
 __pycache__/
 local_settings.py
 db.sqlite3
@@ -14,8 +13,6 @@ db.sqlite3-journal
 media
 my_settings.py
 *.csv
-*.zip
-db_uploader.py
 
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/

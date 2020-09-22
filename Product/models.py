@@ -23,31 +23,30 @@ class SubCategory(models.Model):
 
 class ProductGroup(models.Model):
 	name  = models.CharField(max_length = 45, null=True)
-	subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, null=True)
-
 
 	class Meta:
 	    db_table = 'product_group'
 
 class Products(models.Model):	
-	name          = models.CharField(max_length = 45)
-	price 		    = models.IntegerField(default = 0)	
-	point		      = models.IntegerField(default = 0)
-	thumbnail     = models.CharField(max_length = 100)
-	description   = models.TextField()
-	info		      = models.TextField()
-	notice        = models.TextField()
-	sale_price	  = models.IntegerField(null=True)
-	sub_category  = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
-	hover_image   = models.CharField(max_length=100, null = True)
-	product_group = models.ForeignKey(ProductGroup, on_delete = models.CASCADE)
-	sub_text	    = models.CharField(max_length=45, null=True)
+	name            = models.CharField(max_length = 45)
+	price 		= models.IntegerField(default = 0)	
+	point		= models.IntegerField(default = 0)
+	thumbnail       = models.CharField(max_length = 100)
+	description     = models.TextField()
+	info		= models.TextField()
+	notice          = models.TextField()
+	sale_price	= models.IntegerField(null=True)
+	sub_category    = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
+	hover_image     = models.CharField(max_length=100, null = True)
+	product_group	= models.ForeignKey(ProductGroup, on_delete = models.CASCADE)
+	sub_text	= models.CharField(max_length=45, null=True)
+
 
 	class Meta:
 	    db_table = 'products'
 
 
-class DetailImage(models.Model):
+class DetailImageUrl(models.Model):
         name         = models.ForeignKey(Products, on_delete=models.CASCADE)
         detailImage  = models.TextField()
 
