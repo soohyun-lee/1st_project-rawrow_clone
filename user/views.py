@@ -23,10 +23,10 @@ class SignUpView(View):
             'telephone' not in data.keys()):
             return JsonResponse({'message':'KEY_ERROR'},status=400)
 
-        if not '@' in data['email'] or not '.' in data['email']:#이메일 형식이 안 맞을 때
+        if not '@' in data['email'] or not '.' in data['email']:
             return JsonResponse({'message':'EMAIL_FORM_ERROR'}, status=400)
 
-        if len(str(password)) < password_len:#비밀번호가 4자리 이하일 때
+        if len(str(password)) < password_len:
             return JsonResponse({'message':'PASSWORD_FORM_ERROR'}, status=400)
 
         if (User.objects.filter(userid = data['userid']) or 
