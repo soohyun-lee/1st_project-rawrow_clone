@@ -24,6 +24,7 @@ class ProductGroup(models.Model):
 	name  = models.CharField(max_length = 45, null=True)
 	subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, null=True)
 
+
 	class Meta:
 		db_table = 'product_group'
 
@@ -33,7 +34,7 @@ class Products(models.Model):
 	point		  = models.IntegerField(default = 0)
 	thumbnail     = models.CharField(max_length = 100)
 	description   = models.TextField()
-	info		  = models.TextField()
+	info		      = models.TextField()
 	notice        = models.TextField()
 	sale_price	  = models.IntegerField(null=True)
 	sub_category  = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
