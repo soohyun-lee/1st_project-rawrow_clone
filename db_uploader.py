@@ -6,12 +6,12 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "rawrow.settings")
 django.setup()
 from Product.models import *
 
-CSV_PATH_PRODUCTS = './accessory_all_product.csv'
+CSV_PATH_PRODUCTS = './sale_all_product.csv'
 
 with open(CSV_PATH_PRODUCTS) as in_file:
     data_reader = csv.reader(in_file)
     next(data_reader, None)
-
+    
     #RELATED PRODUCT DUMP하는 코드
     # for row in data_reader:
     #     if row[0]:
@@ -27,7 +27,7 @@ with open(CSV_PATH_PRODUCTS) as in_file:
 
     #     ProductRelated.objects.create(product=product_item, related_product=related_item)
 
-    #DETAIL IMAGE URL DUMP하는 코드
+    # #DETAIL IMAGE URL DUMP하는 코드
     for row in data_reader:
         try:
             product_name = Products.objects.get(name=row[6])
@@ -39,8 +39,8 @@ with open(CSV_PATH_PRODUCTS) as in_file:
         for detail_image in detail_image_list:
             DetailImage.objects.create(name=product_name, detailImage=detail_image)
 
-    # for detail_image in detail_image_list:
-    #         DetailImage.objects.create(name=product_name, detailImage=detail_image)
+    for detail_image in detail_image_list:
+            DetailImage.objects.create(name=product_name, detailImage=detail_image)
 
 
 
@@ -57,7 +57,7 @@ with open(CSV_PATH_PRODUCTS) as in_file:
     #         product_group = row[2]
     #         categories = Category.objects.get(name = category)
     #         subCategories = SubCategory.objects.get(name = subCategory, category=categories)
-    #         ProductGroup.objects.create(name = product_group, subcategory = subCategories)
+            # ProductGroup.objects.create(name = product_group, subcategory = subCategories)
 
     # PRODUCT DUMP 하는 코드
     # for row in data_reader:
