@@ -14,11 +14,13 @@ rawrow(https://www.rawrow.com) 클론 코딩 프로젝트입니다.
 * Token : Bcrypt, JWT
 * Database : MySQL
 * CORS headers
+* RESTful Endpoint
 
 # Tool
 * Github
 * Slack
 * Trello
+* Postman
 
 # Database Modeling
 ![](https://images.velog.io/images/may_soouu/post/a2b70942-a206-4392-8d9d-40c50c6ff26d/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202020-09-26%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%207.31.58.png)
