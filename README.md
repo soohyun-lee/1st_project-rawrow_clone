@@ -14,7 +14,7 @@ rawrow(https://www.rawrow.com) 클론 코딩 프로젝트입니다.
 * Token : Bcrypt, JWT
 * Database : MySQL
 * CORS headers
-* RESTful Endpoint
+* RESTful api
 
 # Tool
 * Github
