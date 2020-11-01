@@ -12,7 +12,7 @@ class SignUpView(View):
     def post(self, request):
         data     = json.loads(request.body)
         password = data.get('password')
-        password_len = 4
+        password_len = 5
 
         if ('email' not in data.keys() or
             'password' not in data.keys() or
@@ -34,7 +34,6 @@ class SignUpView(View):
             User.objects.filter(email = data['email'])):
             return JsonResponse({'message':'ALREADY_IN_USE'}, status=400)
     
-
         password = bcrypt.hashpw(
             data['password'].encode('utf-8'),
             bcrypt.gensalt()
