@@ -53,7 +53,6 @@ class CartView(View):
               "quantity"            : cart_item['quantity']
             }
             all_item.append(each_item)
-        # ===================================================================================
 
         return JsonResponse({'data': all_item}, status=200) # 전체 상품 리스트 뿌리기.
 

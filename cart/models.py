@@ -8,7 +8,5 @@ class Cart(models.Model):
 	product = models.ForeignKey(Products, on_delete = models.CASCADE)
 	quantity = models.IntegerField(default = 1)
 
-
 	class Meta:
 	    db_table = 'cart'
-
