@@ -34,7 +34,7 @@ class SignUpView(View):
             User.objects.filter(email = data['email'])):
             return JsonResponse({'message':'ALREADY_IN_USE'}, status=400)
     
-
+        
         password = bcrypt.hashpw(
             data['password'].encode('utf-8'),
             bcrypt.gensalt()

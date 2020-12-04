@@ -38,17 +38,22 @@ class SearchProducts(View):
 class AllProducts(View):
     def get(self, request):
         order_method = int(request.GET.get('sort_method', None))
-        orderbyList = ('-price','-sale_price')
+        limit        = int(request.GET.get('limit', 0))
+        offset       = int(request.GET.get('offset', 0))
+        total_page   = Products.objects.count() / limit
 
-        if order_method == 0:
-            product_all  = Products.objects.order_by('?')
+
+        if order_method   == 0:
+            product_all   = Products.objects.all()[offset:offset+limit]
         elif order_method == 1:
-            product_all  = Products.objects.extra(select={"current_price":"COALESCE(sale_price, price)"}, order_by=["current_price"])
+            product_all   = Products.objects.order_by('price')[offset:offset+limit]
         elif order_method == 2:
-            product_all  = Products.objects.order_by('-price')
+            product_all   = Products.objects.order_by('-price')[offset:offset+limit]
+
         new_ = []
         for product in product_all:
             new_.append({
+                'total_page'         : total_page,
                 'sub_category_id'    : product.id,
                 'id'                 : product.id,
                 'name'               : product.name,
@@ -62,25 +67,22 @@ class AllProducts(View):
 
 class CategoryProductList(View):
     def get(self, request):
-        category_id = request.GET.get("category", None)
+        category_id    = request.GET.get("category", None)
         subcategory_id = request.GET.get("subcategory", None)
-        order_method = int(request.GET.get('sort_method', None))
+        order_method   = int(request.GET.get('sort_method', None))
+        limit        = int(request.GET.get('limit', 0))
+        offset       = int(request.GET.get('offset', 0))
         if order_method == 0:
             order = '?'
         elif order_method == 1:
             order = 'price'
         elif order_method == 2:
             order = '-price'
-        
-        
-        
         if subcategory_id == None:
-            # subcategories = SubCategory.objects.filter(category_id = category_id).prefetch_related("products_set")
-            # if order_method == 1:
             subcategories = SubCategory.objects.filter(category_id = category_id).prefetch_related("products_set")
             for i in subcategories:
                 new_= []
-                for product in Products.objects.filter(sub_category_id = i.id).order_by(order):
+                for product in Products.objects.filter(sub_category_id = i.id).order_by(order)[offset:offset+limit]:
                     new_.append({
                         'sub_category_id'    : i.id,
                         'id'                 : product.id,
@@ -90,16 +92,15 @@ class CategoryProductList(View):
                         'hover_image'        : product.hover_image,
                         'sale_price'         : product.sale_price,
                     })
-        
+
             return JsonResponse({'data': new_}, status=200)
 
 
         elif subcategory_id != None:
-            # subcategories = SubCategory.objects.filter(category_id = category_id).prefetch_related("products_set")
             subcategories = SubCategory.objects.filter(id = subcategory_id).prefetch_related("products_set")
             for i in subcategories:
                 new_= []
-                for product in Products.objects.filter(sub_category_id = i.id).order_by(order):
+                for product in Products.objects.filter(sub_category_id = i.id).order_by(order)[offset:offset+limit]:
                     new_.append({
                         'sub_category_id'    : i.id,
                         'id'                 : product.id,
@@ -109,28 +110,8 @@ class CategoryProductList(View):
                         'hover_image'        : product.hover_image,
                         'sale_price'         : product.sale_price,
                     })
-        
+
             return JsonResponse({'data': new_}, status=200)
-
-
-
-
-        # else:
-        #     subcategories = SubCategory.objects.filter(id = subcategory_id).prefetch_related("products_set")
-
-        # new_ = []
-        #     for i in subcategories:
-        #         for product in Products.objects.filter(sub_category_id = i.id):
-        #             new_.append({
-        #                 'sub_category_id'    : i.id,
-        #                 'id'                 : product.id,
-        #                 'name'               : product.name,
-        #                 'price'              : product.price,
-        #                 'thumbnail'          : product.thumbnail,
-        #                 'hover_image'        : product.hover_image,
-        #                 'sale_price'         : product.sale_price,
-        #             })
-        #         return JsonResponse({'data': new_.order_by('-price')}, status=200)
 
 class ProductDetailView(View):
     def get(self, request, product_id):
