@@ -51,7 +51,7 @@ class SignUpView(View):
           
         ).save()
 
-        return JsonResponse({'message':'SUCCESS'}, status=200)#그게 아니면 success 반환
+        return JsonResponse({'message':'SUCCESS'}, status=200)
 
     def get(self, request):
         user_data = User.objects.values()
@@ -61,13 +61,13 @@ class LoginView(View):
     def post(self, request):
         data = json.loads(request.body)
         password = data.get('password')
-        #아이디 혹은 비밀번호를 빈칸으로 두고 로그인 하려고 했을 때,
+
         if (data['userid'] == "" or
             data['password'] == ""):
             return JsonResponse({'message':'VALUES_ERROR'},status=400)
 
-        if User.objects.filter(userid=data['userid']):#입력한 아이디를 조회 후
-            login_user = User.objects.get(userid=data['userid'])#변수에 저장
+        if User.objects.filter(userid=data['userid']):
+            login_user = User.objects.get(userid=data['userid'])
             if bcrypt.checkpw(password.encode('utf-8'), login_user.password.encode('utf-8')):
                 token = jwt.encode(
                     {
@@ -77,6 +77,4 @@ class LoginView(View):
                 return JsonResponse({'Authorization': token}, status=200)
             
             return JsonResponse({'message':'INVALID_USER'}, status=400)
-
-
-
+]

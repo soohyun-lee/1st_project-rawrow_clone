@@ -68,4 +68,3 @@ class ProductRelated(models.Model):
 
 	class Meta:
 		db_table = 'product_related'
-
